@@ -1,14 +1,7 @@
 import { motion } from "framer-motion";
-import { GraduationCap, Code, Brain, Rocket } from "lucide-react";
-
-const skills = [
-  { name: "JavaScript", level: 85 },
-  { name: "TypeScript", level: 80 },
-  { name: "Python", level: 75 },
-  { name: "React", level: 85 },
-  { name: "Tailwind CSS", level: 90 },
-  { name: "Node.js", level: 70 },
-];
+import { GraduationCap, Code, Brain, Rocket, Braces, Code2, FileJson, Palette, Globe, GitBranch, Sparkles, Database, ExternalLink } from "lucide-react";
+import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
+import { GlowingCard } from "@/components/ui/glowing-card";
 
 const highlights = [
   {
@@ -33,11 +26,102 @@ const highlights = [
   },
 ];
 
+const technicalSkillsData = [
+  {
+    id: 1,
+    title: "JavaScript",
+    date: "Core",
+    content: "Building dynamic, interactive web applications with modern ES6+ features.",
+    category: "Frontend",
+    icon: Braces,
+    relatedIds: [2, 3],
+    status: "completed" as const,
+    energy: 85,
+  },
+  {
+    id: 2,
+    title: "React",
+    date: "Framework",
+    content: "Creating component-based UIs with hooks and state management.",
+    category: "Frontend",
+    icon: Code2,
+    relatedIds: [1, 3],
+    status: "completed" as const,
+    energy: 80,
+  },
+  {
+    id: 3,
+    title: "TypeScript",
+    date: "Language",
+    content: "Type-safe development with interfaces and generics.",
+    category: "Frontend",
+    icon: FileJson,
+    relatedIds: [1, 2],
+    status: "in-progress" as const,
+    energy: 70,
+  },
+  {
+    id: 4,
+    title: "CSS/Tailwind",
+    date: "Styling",
+    content: "Responsive designs with modern CSS and Tailwind.",
+    category: "Frontend",
+    icon: Palette,
+    relatedIds: [2, 5],
+    status: "completed" as const,
+    energy: 90,
+  },
+  {
+    id: 5,
+    title: "HTML5",
+    date: "Markup",
+    content: "Semantic HTML and accessibility best practices.",
+    category: "Frontend",
+    icon: Globe,
+    relatedIds: [4],
+    status: "completed" as const,
+    energy: 95,
+  },
+  {
+    id: 6,
+    title: "Next.js",
+    date: "Framework",
+    content: "Server-side rendering and full-stack React apps.",
+    category: "Fullstack",
+    icon: Sparkles,
+    relatedIds: [2, 3],
+    status: "in-progress" as const,
+    energy: 65,
+  },
+  {
+    id: 7,
+    title: "Git",
+    date: "Tools",
+    content: "Version control and collaborative development.",
+    category: "Tools",
+    icon: GitBranch,
+    relatedIds: [2],
+    status: "completed" as const,
+    energy: 75,
+  },
+  {
+    id: 8,
+    title: "AI APIs",
+    date: "Integration",
+    content: "Integrating OpenAI and AI services.",
+    category: "AI",
+    icon: Database,
+    relatedIds: [1, 6],
+    status: "pending" as const,
+    energy: 50,
+  },
+];
+
 const AboutSection = () => {
   return (
     <section id="about" className="py-24 relative">
       <div className="absolute inset-0 bg-glow opacity-30" />
-      
+
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -69,21 +153,25 @@ const AboutSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 * index }}
-              className="glass-card p-6 text-center group hover:border-primary/30 transition-all duration-300"
+              className="h-full"
             >
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 mb-4 group-hover:bg-primary/20 transition-colors">
-                <item.icon className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-display font-semibold text-foreground mb-1">
-                {item.title}
-              </h3>
-              <p className="text-sm text-muted-foreground">{item.description}</p>
+              <GlowingCard className="h-full p-6 text-center flex flex-col items-center justify-center gap-4">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 transition-colors">
+                  <item.icon className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-display font-semibold text-foreground mb-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                </div>
+              </GlowingCard>
             </motion.div>
           ))}
         </motion.div>
-
-        {/* About Content */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        {/* About Content - About Me + Orbital Skills */}
+        <div className="grid lg:grid-cols-2 gap-8 items-start">
+          {/* About Me */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -91,64 +179,57 @@ const AboutSection = () => {
             transition={{ duration: 0.6 }}
           >
             <h3 className="font-display text-2xl font-semibold mb-6">
-              My Journey
+              About Me
             </h3>
             <div className="space-y-4 text-muted-foreground">
               <p>
-                I'm currently pursuing my Bachelor's in Data Science & Applications at{" "}
-                <span className="text-foreground">IIT Madras</span>, one of India's premier institutions. 
-                Currently in my second year (Diploma Level), I'm deeply passionate about building 
-                innovative web applications and AI-powered solutions.
+                I'm <span className="text-foreground font-medium">Sushant</span>, a web developer passionate about building modern, responsive, and engaging web experiences. I enjoy creating projects that combine clean design, smart logic, and real-world usability—from AI-based planners to interactive user interfaces.
               </p>
               <p>
-                My tech stack revolves around{" "}
-                <span className="text-primary">JavaScript</span>,{" "}
-                <span className="text-primary">TypeScript</span>, and{" "}
-                <span className="text-primary">Python</span>. I love creating modern, 
-                responsive web experiences using React and Tailwind CSS.
+                I am currently pursuing a <span className="text-foreground font-medium">BS in Data Science from IIT Madras</span>, which helps me strengthen my analytical thinking and problem-solving skills alongside my development work.
               </p>
               <p>
-                When I'm not coding, you'll find me diving deep into Data Structures & Algorithms, 
-                exploring new technologies, or working on personal projects that solve real-world problems.
+                I'm always exploring new technologies, refining my skills, and challenging myself to build better products with every project. I value <span className="text-primary">clean code</span>, <span className="text-primary">good design</span>, and <span className="text-primary">continuous learning</span>, and I aim to create digital solutions that are both functional and visually appealing.
               </p>
             </div>
+
+            {/* View Resume Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="relative inline-block rounded-full p-0.5 mt-6"
+            >
+              <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-primary via-purple-500 to-pink-500 opacity-75 blur-sm animate-pulse" />
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all duration-300"
+              >
+                <ExternalLink className="w-5 h-5" />
+                <span>View Resume</span>
+              </a>
+            </motion.div>
           </motion.div>
 
-          {/* Skills */}
+          {/* Compact Orbital Skills */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="relative"
           >
-            <h3 className="font-display text-2xl font-semibold mb-6">
+            <h3 className="font-display text-2xl font-semibold mb-4 text-center">
               Technical Skills
             </h3>
-            <div className="space-y-4">
-              {skills.map((skill, index) => (
-                <motion.div
-                  key={skill.name}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.1 * index }}
-                >
-                  <div className="flex justify-between mb-2">
-                    <span className="text-foreground font-medium">{skill.name}</span>
-                    <span className="text-muted-foreground text-sm">{skill.level}%</span>
-                  </div>
-                  <div className="h-2 bg-secondary rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${skill.level}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: 0.2 + 0.1 * index }}
-                      className="h-full rounded-full"
-                      style={{ background: "var(--gradient-primary)" }}
-                    />
-                  </div>
-                </motion.div>
-              ))}
+            <p className="text-muted-foreground text-sm text-center mb-4">
+              Click any skill to explore
+            </p>
+            <div className="relative h-[400px] w-full overflow-hidden rounded-xl">
+              <RadialOrbitalTimeline timelineData={technicalSkillsData} />
             </div>
           </motion.div>
         </div>

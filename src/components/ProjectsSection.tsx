@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ExternalLink, Github, Plane, Train, Shield, Layout, Code } from "lucide-react";
+import { GlowingCard } from "@/components/ui/glowing-card";
 
 const projects = [
   {
@@ -56,7 +57,7 @@ const ProjectsSection = () => {
   return (
     <section id="projects" className="py-24 relative">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-      
+
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -82,53 +83,57 @@ const ProjectsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 * index }}
-              className="glass-card p-6 group hover:border-primary/30 transition-all duration-300 flex flex-col"
+              className="h-full"
             >
-              <div className="flex items-start justify-between mb-4">
-                <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                  <project.icon className="w-6 h-6 text-primary" />
+              <GlowingCard className="h-full p-6 flex flex-col gap-4">
+                <div className="flex items-start justify-between">
+                  <div className="p-3 rounded-xl bg-primary/10 transition-colors">
+                    <project.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <div className="flex gap-2">
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-lg hover:bg-secondary transition-colors"
+                      >
+                        <Github className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
+                      </a>
+                    )}
+                    {project.live && (
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-lg hover:bg-secondary transition-colors"
+                      >
+                        <ExternalLink className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
+                      </a>
+                    )}
+                  </div>
                 </div>
-                <div className="flex gap-2">
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-lg hover:bg-secondary transition-colors"
-                    >
-                      <Github className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
-                    </a>
-                  )}
-                  {project.live && (
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-lg hover:bg-secondary transition-colors"
-                    >
-                      <ExternalLink className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
-                    </a>
-                  )}
+
+                <div>
+                  <h3 className="font-display text-xl font-semibold mb-2 text-foreground">
+                    {project.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm">
+                    {project.description}
+                  </p>
                 </div>
-              </div>
 
-              <h3 className="font-display text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
-                {project.title}
-              </h3>
-              <p className="text-muted-foreground text-sm mb-4 flex-grow">
-                {project.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2">
-                {project.tech.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-3 py-1 rounded-full text-xs font-medium bg-secondary text-secondary-foreground"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
+                <div className="flex flex-wrap gap-2 mt-auto pt-4">
+                  {project.tech.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-3 py-1 rounded-full text-xs font-medium bg-secondary/50 text-secondary-foreground border border-border/50"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </GlowingCard>
             </motion.div>
           ))}
         </div>
