@@ -1,4 +1,7 @@
-# IIT Madras Portfolio
+# Portfolio Website 🚀
+
+Updated with enhanced AI Assistant and 3D animations.
+Live at: [sushantmishra.in](https://sushantmishra.in)
 
 ## Project info
 
