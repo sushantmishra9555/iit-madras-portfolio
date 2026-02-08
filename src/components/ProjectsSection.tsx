@@ -9,7 +9,7 @@ const projects = [
     tech: ["TypeScript", "React", "AI/ML", "Tailwind CSS"],
     icon: Plane,
     github: "https://github.com/sushantmishra9555/AI-TripGenius-planner",
-    live: null,
+    live: "https://ai-trip-genius-planner.vercel.app",
     featured: true,
   },
   {
@@ -27,7 +27,7 @@ const projects = [
     tech: ["TypeScript", "React", "Tailwind CSS", "i18n"],
     icon: Train,
     github: "https://github.com/sushantmishra9555/train-fare-buddy",
-    live: null,
+    live: "https://train-fare-buddy.vercel.app",
     featured: true,
   },
   {
@@ -45,7 +45,7 @@ const projects = [
     tech: ["HTML", "CSS", "JavaScript"],
     icon: Code,
     github: "https://github.com/sushantmishra9555/index.html",
-    live: null,
+    live: "https://sushantmishra.in",
     featured: false,
   },
 ];
@@ -86,29 +86,31 @@ const ProjectsSection = () => {
               className="h-full"
             >
               <GlowingCard className="h-full p-6 flex flex-col gap-4">
-                <div className="flex items-start justify-between">
+                <div className="flex items-start justify-between mb-4">
                   <div className="p-3 rounded-xl bg-primary/10 transition-colors">
                     <project.icon className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex gap-2">
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-lg hover:bg-secondary transition-colors"
-                      >
-                        <Github className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
-                      </a>
-                    )}
                     {project.live && (
                       <a
                         href={project.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 rounded-lg hover:bg-secondary transition-colors"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary text-xs font-medium transition-colors"
                       >
-                        <ExternalLink className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        View Live
+                      </a>
+                    )}
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-1.5 rounded-lg hover:bg-secondary transition-colors"
+                        title="View Code"
+                      >
+                        <Github className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
                       </a>
                     )}
                   </div>
