@@ -125,12 +125,12 @@ const ProjectsSection = () => {
 
                 <div className="flex flex-wrap gap-2 mt-auto pt-4">
                   {project.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 rounded-full text-xs font-medium bg-secondary/50 text-secondary-foreground border border-border/50"
-                    >
-                      {tech}
-                    </span>
+                    <div key={tech} className="relative group/tech">
+                      <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 rounded-full opacity-75 group-hover/tech:opacity-100 blur-[2px] transition duration-500 animate-gradient-xy"></div>
+                      <span className="relative block px-3 py-1 rounded-full text-xs font-medium bg-black text-white border border-white/10">
+                        {tech}
+                      </span>
+                    </div>
                   ))}
                 </div>
               </GlowingCard>

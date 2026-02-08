@@ -11,6 +11,45 @@ const navLinks = [
   { name: "Contact", href: "#contact" },
 ];
 
+const MobilePreviewToggle = () => {
+  const [isMobilePreview, setIsMobilePreview] = useState(false);
+
+  useEffect(() => {
+    if (isMobilePreview) {
+      document.body.classList.add("mobile-preview");
+    } else {
+      document.body.classList.remove("mobile-preview");
+    }
+    return () => document.body.classList.remove("mobile-preview");
+  }, [isMobilePreview]);
+
+  return (
+    <button
+      onClick={() => setIsMobilePreview(!isMobilePreview)}
+      className={`p-2 rounded-full transition-colors relative ${isMobilePreview ? "bg-primary text-primary-foreground" : "hover:bg-secondary text-muted-foreground"
+        }`}
+      title={isMobilePreview ? "Exit Mobile Preview" : "Enter Mobile Preview"}
+    >
+      <div className="w-5 h-5 flex items-center justify-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+          <path d="M12 18h.01" />
+        </svg>
+      </div>
+    </button>
+  );
+};
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -95,6 +134,12 @@ const Navbar = () => {
                 )}
               </a>
             ))}
+
+
+
+            {/* Theme Color Changer */}
+            <ThemeColorChanger />
+
             <a
               href="https://www.linkedin.com/in/sushant-mishra-4a3604385/"
               target="_blank"
@@ -106,16 +151,21 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors"
-          >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
+          <div className="flex items-center gap-4 md:hidden">
+
+            <ThemeColorChanger />
+
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded-lg hover:bg-secondary transition-colors"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -156,6 +206,62 @@ const Navbar = () => {
         )}
       </AnimatePresence>
     </motion.nav>
+  );
+};
+
+// Theme Color Changer Component
+const ThemeColorChanger = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeColor, setActiveColor] = useState("teal");
+
+  const colors = [
+    { name: "teal", primary: "174 72% 56%", gradient: "linear-gradient(135deg, hsl(174 72% 56%) 0%, hsl(199 89% 48%) 100%)", class: "bg-[#3dd8c2]" },
+    { name: "purple", primary: "270 70% 60%", gradient: "linear-gradient(135deg, hsl(270 70% 60%) 0%, hsl(290 89% 48%) 100%)", class: "bg-[#a855f7]" },
+    { name: "pink", primary: "330 70% 60%", gradient: "linear-gradient(135deg, hsl(330 70% 60%) 0%, hsl(350 89% 48%) 100%)", class: "bg-[#ec4899]" },
+    { name: "blue", primary: "210 70% 60%", gradient: "linear-gradient(135deg, hsl(210 70% 60%) 0%, hsl(230 89% 48%) 100%)", class: "bg-[#3b82f6]" },
+    { name: "orange", primary: "30 90% 60%", gradient: "linear-gradient(135deg, hsl(30 90% 60%) 0%, hsl(10 89% 48%) 100%)", class: "bg-[#f97316]" },
+  ];
+
+  const handleColorChange = (color: typeof colors[0]) => {
+    setActiveColor(color.name);
+    document.documentElement.style.setProperty("--primary", color.primary);
+    document.documentElement.style.setProperty("--gradient-primary", color.gradient);
+    // Also update ring for focus states
+    document.documentElement.style.setProperty("--ring", color.primary);
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="p-2 rounded-full hover:bg-secondary transition-colors relative"
+        aria-label="Change Theme"
+      >
+        <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-primary/50 border border-white/20" />
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 10, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.9 }}
+            className="absolute top-12 right-0 md:left-1/2 md:-translate-x-1/2 bg-popover/90 backdrop-blur-xl border border-border p-3 rounded-2xl shadow-xl z-50 flex gap-2 min-w-max"
+          >
+            {colors.map((color) => (
+              <button
+                key={color.name}
+                onClick={() => handleColorChange(color)}
+                className={`w-8 h-8 rounded-full ${color.class} border-2 transition-transform hover:scale-110 ${activeColor === color.name ? "border-white scale-110" : "border-transparent"
+                  }`}
+                title={`Switch to ${color.name}`}
+              />
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 

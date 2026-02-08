@@ -29,7 +29,7 @@ export default function RadialOrbitalTimeline({
     );
     const [viewMode, setViewMode] = useState<"orbital">("orbital");
     const [rotationAngle, setRotationAngle] = useState<number>(0);
-    const [autoRotate, setAutoRotate] = useState<boolean>(true);
+    const [autoRotate, setAutoRotate] = useState<boolean>(false); // Rotation OFF by default
     const [pulseEffect, setPulseEffect] = useState<Record<number, boolean>>({});
     const [centerOffset, setCenterOffset] = useState<{ x: number; y: number }>({
         x: 0,
@@ -82,27 +82,23 @@ export default function RadialOrbitalTimeline({
         });
     };
 
-    useEffect(() => {
-        let animationFrameId: number;
-        let lastTime = performance.now();
-
-        const animate = (currentTime: number) => {
-            if (autoRotate && viewMode === "orbital") {
-                const deltaTime = currentTime - lastTime;
-                lastTime = currentTime;
-
-                // Smooth rotation: 0.02 degrees per millisecond (about 72 degrees per second)
-                setRotationAngle((prev) => (prev + deltaTime * 0.02) % 360);
-            }
-            animationFrameId = requestAnimationFrame(animate);
-        };
-
-        animationFrameId = requestAnimationFrame(animate);
-
-        return () => {
-            cancelAnimationFrame(animationFrameId);
-        };
-    }, [autoRotate, viewMode]);
+    // Rotation animation DISABLED - static display
+    // useEffect(() => {
+    //     let animationFrameId: number;
+    //     let lastTime = performance.now();
+    //     const animate = (currentTime: number) => {
+    //         if (autoRotate && viewMode === "orbital") {
+    //             const deltaTime = currentTime - lastTime;
+    //             lastTime = currentTime;
+    //             setRotationAngle((prev) => (prev + deltaTime * 0.05) % 360);
+    //         }
+    //         animationFrameId = requestAnimationFrame(animate);
+    //     };
+    //     animationFrameId = requestAnimationFrame(animate);
+    //     return () => {
+    //         cancelAnimationFrame(animationFrameId);
+    //     };
+    // }, [autoRotate, viewMode]);
 
     const centerViewOnNode = (nodeId: number) => {
         if (viewMode !== "orbital" || !nodeRefs.current[nodeId]) return;
@@ -170,13 +166,17 @@ export default function RadialOrbitalTimeline({
                         transform: `translate(${centerOffset.x}px, ${centerOffset.y}px)`,
                     }}
                 >
-                    <div className="absolute w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 via-blue-500 to-teal-500 animate-pulse flex items-center justify-center z-10">
+                    <div className="absolute w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 via-blue-500 to-teal-500 flex items-center justify-center z-10">
                         <div className="absolute w-20 h-20 rounded-full border border-white/20 animate-ping opacity-70"></div>
                         <div
                             className="absolute w-24 h-24 rounded-full border border-white/10 animate-ping opacity-50"
                             style={{ animationDelay: "0.5s" }}
                         ></div>
                         <div className="w-8 h-8 rounded-full bg-white/80 backdrop-blur-md"></div>
+                    </div>
+                    {/* Click to Explore prompt */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-16 text-white/60 text-xs font-medium whitespace-nowrap z-20">
+                        Click to Explore
                     </div>
 
                     <div className="absolute w-72 h-72 rounded-full border border-white/10"></div>

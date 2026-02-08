@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { GraduationCap, Code, Brain, Rocket, Braces, Code2, FileJson, Palette, Globe, GitBranch, Sparkles, Database, ExternalLink } from "lucide-react";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import { GlowingCard } from "@/components/ui/glowing-card";
+import { GradientButton } from "@/components/ui/gradient-button";
 
 const highlights = [
   {
@@ -199,17 +200,17 @@ const AboutSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.2 }}
-              className="relative inline-block rounded-full p-0.5 mt-6"
+              className="mt-6"
             >
-              <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-primary via-purple-500 to-pink-500 opacity-75 blur-sm animate-pulse" />
               <a
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all duration-300"
               >
-                <ExternalLink className="w-5 h-5" />
-                <span>View Resume</span>
+                <GradientButton className="gap-2 px-6">
+                  <ExternalLink className="w-5 h-5" />
+                  <span>View Resume</span>
+                </GradientButton>
               </a>
             </motion.div>
           </motion.div>
