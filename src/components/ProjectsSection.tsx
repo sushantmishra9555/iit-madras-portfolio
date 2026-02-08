@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ExternalLink, Github, Plane, Train, Shield, Layout, Code } from "lucide-react";
 import { GlowingCard } from "@/components/ui/glowing-card";
+import { GradientButton } from "@/components/ui/gradient-button";
 
 const projects = [
   {
@@ -92,15 +93,21 @@ const ProjectsSection = () => {
                   </div>
                   <div className="flex gap-2">
                     {project.live && (
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary text-xs font-medium transition-colors"
+                      <GradientButton
+                        asChild
+                        className="min-w-0 px-4 py-2 h-8 text-xs rounded-lg flex gap-2"
+                        variant="variant"
                       >
-                        <ExternalLink className="w-3.5 h-3.5" />
-                        View Live
-                      </a>
+                        <a
+                          href={project.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          View Live
+                        </a>
+                      </GradientButton>
                     )}
                     {project.github && (
                       <a
